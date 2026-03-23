@@ -1,0 +1,22 @@
+:root { 
+  --color-primary: #c97d2e; 
+  --color-primary-hover: #e8a44a; 
+  --color-primary-pale: #f5deb3;
+  --color-background: #0e0c0a; 
+  --color-surface: #2a2520;
+  --color-foreground: #f5f0e8; 
+  --color-border: #2a2520; 
+  --color-muted: #8a8075;
+  --color-success: #4a6741;
+  --color-warning: #e8a44a;
+  --color-destructive: #b84c2a;
+  --radius-md: 0.375rem; 
+} 
+
+/* For a light theme swap if needed */
+.light { 
+  --color-background: #f5f0e8; 
+  --color-foreground: #0e0c0a; 
+  --color-surface: #ffffff;
+  --color-border: #8a8075; 
+} 
