@@ -2,15 +2,22 @@ import { cn } from "@repo/utils";
 import { HTMLAttributes } from "react";
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "success" | "warning" | "destructive" | "outline";
+  variant?:
+    | "default"
+    | "success"
+    | "warning"
+    | "destructive"
+    | "outline"
+    | "info";
   size?: "sm" | "md";
 }
 
 const variantStyles = {
   default: "bg-primary-pale text-primary border-transparent",
-  success: "bg-success/20 text-success border-transparent",
-  warning: "bg-warning/20 text-warning border-transparent",
-  destructive: "bg-destructive/20 text-destructive border-transparent",
+  success: "bg-success-pale text-success border-transparent",
+  warning: "bg-warning-pale text-warning border-transparent",
+  destructive: "bg-destructive-pale text-destructive border-transparent",
+  info: "bg-info-pale text-info border-transparent",
   outline: "bg-transparent text-foreground border-border",
 };
 
@@ -28,10 +35,10 @@ export function Badge({
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-full border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+        "inline-flex items-center rounded-full border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
         variantStyles[variant],
         sizeStyles[size],
-        className
+        className,
       )}
       {...props}
     />
