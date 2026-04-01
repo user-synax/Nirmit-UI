@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {leftIcon && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted">
               {leftIcon}
             </span>
           )}
@@ -29,22 +29,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={id}
             className={cn(
-              "h-10 w-full rounded border border-border bg-background px-3 py-2",
-              "text-sm text-foreground placeholder:text-neutral-400",
-              "transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent",
+              "h-10 w-full rounded-lg border border-border bg-surface px-3 py-2",
+              "text-sm text-foreground placeholder:text-muted",
+              "transition-all duration-fast",
+              "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
+              "hover:border-border-hover",
               "disabled:cursor-not-allowed disabled:opacity-50",
-              error && "border-red-500 focus:ring-red-500",
+              error && "border-destructive focus:ring-destructive",
               leftIcon && "pl-9",
-              className
+              className,
             )}
             {...props}
           />
         </div>
-        {error && <p className="text-xs text-red-500">{error}</p>}
-        {hint && !error && <p className="text-xs text-neutral-400">{hint}</p>}
+        {error && <p className="text-xs text-destructive">{error}</p>}
+        {hint && !error && <p className="text-xs text-muted">{hint}</p>}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";
