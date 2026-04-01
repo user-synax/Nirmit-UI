@@ -7,11 +7,8 @@
       "@utils/*": ["packages/utils/src/*"],
       "@utils": ["packages/utils/src/index.ts"],
       "@tokens/*": ["packages/tokens/src/*"],
-      "@tokens": ["packages/tokens/src/index.ts"],
-      "@hooks/*": ["packages/hooks/src/*"],
-      "@hooks": ["packages/hooks/src/index.ts"]
+      "@tokens": ["packages/tokens/src/index.ts"]
     },
-    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
