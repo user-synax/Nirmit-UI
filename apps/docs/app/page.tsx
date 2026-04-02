@@ -88,6 +88,12 @@ export default function Home() {
           </div>
           <nav className="hidden items-center gap-6 md:flex">
             <a
+              href="/component"
+              className="text-sm text-muted transition-colors hover:text-foreground"
+            >
+              Component Explorer
+            </a>
+            <a
               href="#components"
               className="text-sm text-muted transition-colors hover:text-foreground"
             >

@@ -5,9 +5,69 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --scrollbar-track: #0b1220;
+    --scrollbar-thumb: #1d4ed8;
+    --scrollbar-thumb-hover: #0ea5e9;
+    --scrollbar-size: 12px;
+  }
+
+  .light {
+    --scrollbar-track: #dbeafe;
+    --scrollbar-thumb: #2563eb;
+    --scrollbar-thumb-hover: #0284c7;
+  }
+
   * {
     @apply border-border;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   }
+
+  *::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+  }
+
+  *::-webkit-scrollbar-track {
+    background: linear-gradient(
+      180deg,
+      var(--scrollbar-track),
+      var(--scrollbar-track)
+    );
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      var(--scrollbar-thumb),
+      var(--scrollbar-thumb-hover)
+    );
+    border: 2px solid transparent;
+    background-clip: content-box;
+    border-radius: 9999px;
+    min-height: 40px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      var(--scrollbar-thumb-hover),
+      var(--scrollbar-thumb)
+    );
+    background-clip: content-box;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+  }
+
+  html,
+  body {
+    scrollbar-gutter: stable both-edges;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings:
