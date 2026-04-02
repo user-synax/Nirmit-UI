@@ -42,6 +42,7 @@ import {
   EmptyState,
   Input,
   Kbd,
+  LoadingDots,
   Modal,
   Pagination,
   PaginationEllipsis,
@@ -61,11 +62,24 @@ import {
   SkeletonText,
   Spinner,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
   Textarea,
+  Timeline,
+  TimelineDescription,
+  TimelineDot,
+  TimelineItem,
+  TimelineLine,
+  TimelineMeta,
+  TimelineTitle,
   Tooltip,
 } from "@repo/ui";
 import {
@@ -707,6 +721,85 @@ export function Demo() {
   );
 }
 
+function TablePreview() {
+  return (
+    <Table variant="striped">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Component</TableHead>
+          <TableHead>Category</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead className="text-right">Variants</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell className="font-medium">Button</TableCell>
+          <TableCell>Actions</TableCell>
+          <TableCell>Stable</TableCell>
+          <TableCell className="text-right">9</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">Modal</TableCell>
+          <TableCell>Overlays</TableCell>
+          <TableCell>Stable</TableCell>
+          <TableCell className="text-right">6 sizes</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">Timeline</TableCell>
+          <TableCell>Data Display</TableCell>
+          <TableCell>New</TableCell>
+          <TableCell className="text-right">Composable</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+
+function TimelinePreview() {
+  return (
+    <Timeline>
+      <TimelineItem>
+        <TimelineDot active />
+        <TimelineLine />
+        <TimelineMeta>Step 1</TimelineMeta>
+        <TimelineTitle>Initialize project</TimelineTitle>
+        <TimelineDescription>
+          Set up docs app and shared workspace dependencies.
+        </TimelineDescription>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineDot active />
+        <TimelineLine />
+        <TimelineMeta>Step 2</TimelineMeta>
+        <TimelineTitle>Build components</TimelineTitle>
+        <TimelineDescription>
+          Add reusable primitives and variant system with consistent tokens.
+        </TimelineDescription>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineDot />
+        <TimelineMeta>Step 3</TimelineMeta>
+        <TimelineTitle>Ship release</TimelineTitle>
+        <TimelineDescription>
+          Final QA, publish changelog, and deploy documentation.
+        </TimelineDescription>
+      </TimelineItem>
+    </Timeline>
+  );
+}
+
+function LoadingDotsPreview() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <LoadingDots size="sm" variant="default" />
+      <LoadingDots size="md" variant="primary" />
+      <LoadingDots size="lg" variant="success" />
+      <LoadingDots size="md" variant="warning" />
+    </div>
+  );
+}
+
 const showcaseItems: ShowcaseItem[] = [
   {
     id: "button",
@@ -756,6 +849,20 @@ const showcaseItems: ShowcaseItem[] = [
     category: "Data Display",
     description: "User images with initials fallback and avatar grouping.",
     Preview: AvatarPreview,
+  },
+  {
+    id: "table",
+    name: "Table",
+    category: "Data Display",
+    description: "Composable table primitives with striped and compact variants.",
+    Preview: TablePreview,
+  },
+  {
+    id: "timeline",
+    name: "Timeline",
+    category: "Data Display",
+    description: "Vertical timeline layout for process steps and event history.",
+    Preview: TimelinePreview,
   },
   {
     id: "alert",
@@ -876,6 +983,13 @@ const showcaseItems: ShowcaseItem[] = [
     description: "Minimal loading indicator with size and color variants.",
     Preview: SpinnerPreview,
   },
+  {
+    id: "loading-dots",
+    name: "LoadingDots",
+    category: "Feedback",
+    description: "Animated three-dot loader for subtle inline loading states.",
+    Preview: LoadingDotsPreview,
+  },
 ];
 
 const usageExamples: Record<string, string> = {
@@ -943,6 +1057,59 @@ export function UserAvatar() {
       <AvatarImage src="/user.png" alt="User" />
       <AvatarFallback>JD</AvatarFallback>
     </Avatar>
+  );
+}`,
+  table: `import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@repo/ui";
+
+export function ComponentTable() {
+  return (
+    <Table variant="striped">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Button</TableCell>
+          <TableCell>Stable</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}`,
+  timeline: `import {
+  Timeline,
+  TimelineItem,
+  TimelineDot,
+  TimelineLine,
+  TimelineTitle,
+  TimelineDescription,
+} from "@repo/ui";
+
+export function ReleaseTimeline() {
+  return (
+    <Timeline>
+      <TimelineItem>
+        <TimelineDot active />
+        <TimelineLine />
+        <TimelineTitle>Design</TimelineTitle>
+        <TimelineDescription>Finalize UI decisions.</TimelineDescription>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineDot />
+        <TimelineTitle>Ship</TimelineTitle>
+        <TimelineDescription>Deploy to production.</TimelineDescription>
+      </TimelineItem>
+    </Timeline>
   );
 }`,
   alert: `import { Alert } from "@repo/ui";
@@ -1171,21 +1338,128 @@ export function ApiSnippet() {
 export function Loading() {
   return <Spinner size="md" variant="primary" />;
 }`,
+  "loading-dots": `import { LoadingDots } from "@repo/ui";
+
+export function InlineLoading() {
+  return <LoadingDots size="md" variant="primary" />;
+}`,
 };
 
 export default function ComponentPage() {
   const [activeId, setActiveId] = React.useState(showcaseItems[0]?.id ?? "");
   const [copied, setCopied] = React.useState(false);
-  const activeItem =
-    showcaseItems.find((item) => item.id === activeId) ?? showcaseItems[0];
-  const ActivePreview = activeItem.Preview;
-  const usageCode =
-    usageExamples[activeItem.id] ??
-    `import { ${activeItem.name} } from "@repo/ui";
+  const [showFullCode, setShowFullCode] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [sourceCode, setSourceCode] = React.useState("");
+  const [sourceDeps, setSourceDeps] = React.useState<string[]>([]);
+  const [sourceInstallCommand, setSourceInstallCommand] = React.useState("");
+  const [sourceFilePath, setSourceFilePath] = React.useState("");
+  const [sourceLoading, setSourceLoading] = React.useState(false);
+  const [sourceError, setSourceError] = React.useState<string | null>(null);
 
-export function Example() {
-  return <${activeItem.name} />;
-}`;
+  const filteredItems = React.useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) {
+      return showcaseItems;
+    }
+
+    return showcaseItems.filter((item) =>
+      [item.name, item.category, item.description].some((value) =>
+        value.toLowerCase().includes(query),
+      ),
+    );
+  }, [searchQuery]);
+
+  React.useEffect(() => {
+    if (
+      filteredItems.length > 0 &&
+      !filteredItems.some((item) => item.id === activeId)
+    ) {
+      setActiveId(filteredItems[0].id);
+    }
+  }, [filteredItems, activeId]);
+
+  const activeItem =
+    filteredItems.find((item) => item.id === activeId) ??
+    filteredItems[0] ??
+    showcaseItems.find((item) => item.id === activeId) ??
+    showcaseItems[0];
+  const ActivePreview = activeItem.Preview;
+  const usageCode = sourceCode || usageExamples[activeItem.id] || "";
+  const codeMetrics = React.useMemo(() => {
+    const fullCode = usageCode || "";
+    const lines = fullCode ? fullCode.split("\n") : [];
+    const totalLines = lines.length;
+    const previewLines = Math.max(12, Math.ceil(totalLines * 0.2));
+    const hasHiddenLines = totalLines > previewLines;
+    const previewCode = hasHiddenLines
+      ? lines.slice(0, previewLines).join("\n")
+      : fullCode;
+
+    return {
+      fullCode,
+      previewCode,
+      totalLines,
+      previewLines,
+      hasHiddenLines,
+    };
+  }, [usageCode]);
+
+  const codeToDisplay = sourceLoading
+    ? "Loading full component source..."
+    : showFullCode || !codeMetrics.hasHiddenLines
+      ? codeMetrics.fullCode
+      : codeMetrics.previewCode;
+
+  React.useEffect(() => {
+    const controller = new AbortController();
+    setShowFullCode(false);
+
+    const loadComponentSource = async () => {
+      setSourceLoading(true);
+      setSourceError(null);
+
+      try {
+        const response = await fetch(
+          `/api/component-source?id=${encodeURIComponent(activeItem.id)}`,
+          {
+            signal: controller.signal,
+            cache: "no-store",
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch source");
+        }
+
+        const payload = (await response.json()) as {
+          code: string;
+          dependencies: string[];
+          installCommand: string;
+          filePath: string;
+        };
+
+        setSourceCode(payload.code);
+        setSourceDeps(payload.dependencies ?? []);
+        setSourceInstallCommand(payload.installCommand ?? "");
+        setSourceFilePath(payload.filePath ?? "");
+      } catch (error) {
+        if ((error as { name?: string }).name === "AbortError") {
+          return;
+        }
+        setSourceError("Unable to load full component source right now.");
+        setSourceCode("");
+        setSourceDeps([]);
+        setSourceInstallCommand("");
+        setSourceFilePath("");
+      } finally {
+        setSourceLoading(false);
+      }
+    };
+
+    void loadComponentSource();
+    return () => controller.abort();
+  }, [activeItem.id]);
 
   const handleBack = React.useCallback(() => {
     if (window.history.length > 1) {
@@ -1263,14 +1537,36 @@ export function Example() {
                   <Component className="h-4 w-4 text-info" />
                   <h2 className="text-sm font-semibold">All Components</h2>
                 </div>
-                <Badge variant="outline">{showcaseItems.length}</Badge>
+                <Badge variant="outline" className="tabular-nums">
+                  {filteredItems.length}/{showcaseItems.length}
+                </Badge>
               </div>
               <p className="mt-2 text-xs text-muted">
-                Active selection stays highlighted as you switch components.
+                Search and switch components with active selection highlight.
               </p>
 
+              <div className="mt-3 space-y-2">
+                <Input
+                  placeholder="Search components..."
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  leftIcon={<Search className="h-4 w-4" />}
+                  className="h-9"
+                />
+                {searchQuery.trim() && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => setSearchQuery("")}
+                  >
+                    Clear Search
+                  </Button>
+                )}
+              </div>
+
               <nav className="mt-4 max-h-[58vh] space-y-2 overflow-y-auto pr-1 lg:max-h-[72vh]">
-                {showcaseItems.map((item) => {
+                {filteredItems.map((item) => {
                   const isActive = item.id === activeItem.id;
 
                   return (
@@ -1301,6 +1597,11 @@ export function Example() {
                     </button>
                   );
                 })}
+                {filteredItems.length === 0 && (
+                  <div className="rounded-xl border border-dashed border-border bg-background p-3 text-xs text-muted">
+                    No components matched "{searchQuery.trim()}".
+                  </div>
+                )}
               </nav>
             </div>
           </aside>
@@ -1341,10 +1642,10 @@ export function Example() {
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    Usage Code
+                    Component Source Code
                   </p>
                   <p className="text-xs text-muted">
-                    Copy this snippet to start using the selected component.
+                    Copy full source and install the listed dependencies.
                   </p>
                 </div>
                 <Button size="sm" variant="secondary" onClick={handleCopy}>
@@ -1361,8 +1662,56 @@ export function Example() {
                   )}
                 </Button>
               </div>
+              {sourceFilePath && (
+                <p className="mb-3 text-xs text-muted">
+                  Source: <span className="font-mono">{sourceFilePath}</span>
+                </p>
+              )}
+              {sourceDeps.length > 0 && (
+                <div className="mb-3 space-y-2">
+                  <p className="text-xs font-medium text-foreground">
+                    Required dependencies
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {sourceDeps.map((dep) => (
+                      <span
+                        key={dep}
+                        className="rounded-full border border-border bg-surface px-2 py-0.5 text-[11px] text-muted-foreground"
+                      >
+                        {dep}
+                      </span>
+                    ))}
+                  </div>
+                  {sourceInstallCommand && (
+                    <pre className="max-w-full overflow-x-auto rounded-lg border border-border bg-[#0a1528] px-3 py-2 text-[11px] text-slate-100 sm:text-xs">
+                      <code>{sourceInstallCommand}</code>
+                    </pre>
+                  )}
+                </div>
+              )}
+              {sourceError && (
+                <p className="mb-3 text-xs text-warning">{sourceError}</p>
+              )}
+              {!sourceLoading && codeMetrics.totalLines > 0 && (
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-xs text-muted">
+                    {showFullCode || !codeMetrics.hasHiddenLines
+                      ? `Showing all ${codeMetrics.totalLines} lines`
+                      : `Showing ${codeMetrics.previewLines} of ${codeMetrics.totalLines} lines`}
+                  </p>
+                  {codeMetrics.hasHiddenLines && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setShowFullCode((prev) => !prev)}
+                    >
+                      {showFullCode ? "Show less" : "Show full code"}
+                    </Button>
+                  )}
+                </div>
+              )}
               <pre className="max-w-full overflow-x-auto rounded-xl border border-border bg-[#081223] p-4 text-xs text-slate-100 sm:text-sm">
-                <code>{usageCode}</code>
+                <code>{codeToDisplay}</code>
               </pre>
             </div>
 

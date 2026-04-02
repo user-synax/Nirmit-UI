@@ -11,9 +11,10 @@ It is designed for teams that want:
 
 ## Highlights
 
-- 20+ reusable components and utilities
+- 25+ reusable components and utilities
 - token-driven design foundation (`@repo/tokens`)
-- component docs site with live previews + copy-ready snippets
+- component docs site with live previews and copy-ready snippets
+- searchable component explorer with mobile-friendly layout
 - accessibility-first primitives (Radix-based)
 - monorepo structure for scale and consistency
 
@@ -23,16 +24,16 @@ It is designed for teams that want:
 
 ```text
 nirmitui/
-├─ apps/
-│  └─ docs/                # Next.js docs + component explorer
-├─ packages/
-│  ├─ ui/                  # Core component library
-│  ├─ tokens/              # Design tokens + Tailwind preset
-│  ├─ utils/               # Shared utilities (e.g. cn)
-│  └─ hooks/               # Shared React hooks
-├─ turbo.json
-├─ pnpm-workspace.yaml
-└─ package.json
+|-- apps/
+|   `-- docs/                # Next.js docs + component explorer
+|-- packages/
+|   |-- ui/                  # Core component library
+|   |-- tokens/              # Design tokens + Tailwind preset
+|   |-- utils/               # Shared utilities (e.g. cn)
+|   `-- hooks/               # Shared React hooks
+|-- turbo.json
+|-- pnpm-workspace.yaml
+`-- package.json
 ```
 
 ---
@@ -77,6 +78,9 @@ Current exports from `@repo/ui` include:
 - EmptyState
 - Pagination
 - CodeBlock
+- Table
+- Timeline
+- LoadingDots
 
 ---
 
@@ -142,8 +146,8 @@ export function ExampleCard() {
 
 If this repository is connected to GitHub:
 
-1. Import project in Vercel
-2. Set **Root Directory** to `apps/docs`
+1. Import the project in Vercel.
+2. Set **Root Directory** to `apps/docs`.
 3. Use:
    - Install Command: `pnpm install`
    - Build Command: `cd ../.. && turbo build --filter=docs`
@@ -153,8 +157,8 @@ If this repository is connected to GitHub:
 
 ## Notes
 
-- This repo currently uses workspace packages (`workspace:*`) and is optimized for monorepo usage.
-- If you want to publish `@repo/ui` to npm, package names/versioning and publish settings will need to be prepared.
+- This repo uses workspace packages (`workspace:*`) and is optimized for monorepo usage.
+- If you want to publish `@repo/ui` to npm, package names/versioning and publish settings will need preparation.
 
 ---
 

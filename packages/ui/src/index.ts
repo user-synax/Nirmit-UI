@@ -22,3 +22,6 @@ export * from "./breadcrumb";
 export * from "./empty-state";
 export * from "./pagination";
 export * from "./code-block";
+export * from "./table";
+export * from "./timeline";
+export * from "./loading-dots";
