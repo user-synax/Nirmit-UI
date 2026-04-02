@@ -13,6 +13,10 @@ const meta: Meta<typeof Input> = {
     hint: { control: "text" },
     error: { control: "text" },
     placeholder: { control: "text" },
+    variant: {
+      control: "select",
+      options: ["default", "filled", "ghost"],
+    },
     disabled: { control: "boolean" },
   },
 };
@@ -55,5 +59,13 @@ export const Disabled: Story = {
     label: "Disabled Input",
     placeholder: "Cannot edit",
     disabled: true,
+  },
+};
+
+export const Filled: Story = {
+  args: {
+    label: "Project Name",
+    placeholder: "NirmitUI",
+    variant: "filled",
   },
 };

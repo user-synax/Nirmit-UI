@@ -2,7 +2,13 @@ import { cn } from "@repo/utils";
 import { HTMLAttributes } from "react";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "bordered" | "elevated" | "ghost";
+  variant?:
+    | "default"
+    | "bordered"
+    | "elevated"
+    | "ghost"
+    | "interactive"
+    | "gradient";
 }
 
 const variantStyles = {
@@ -10,6 +16,10 @@ const variantStyles = {
   bordered: "bg-transparent border-2 border-border",
   elevated: "bg-surface shadow-lg border-0",
   ghost: "bg-transparent border-0",
+  interactive:
+    "bg-surface border border-border hover:-translate-y-0.5 hover:shadow-md",
+  gradient:
+    "bg-gradient-to-br from-surface via-surface to-surface-elevated border border-border",
 };
 
 export function Card({

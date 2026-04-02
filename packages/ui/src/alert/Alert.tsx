@@ -6,10 +6,10 @@ import {
   Info,
   LucideIcon,
 } from "lucide-react";
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes } from "react";
 
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: "info" | "success" | "warning" | "destructive";
+  variant?: "info" | "success" | "warning" | "destructive" | "neutral";
   title?: string;
   icon?: LucideIcon;
   dismissible?: boolean;
@@ -21,6 +21,7 @@ const variantStyles = {
   success: "bg-success-pale border-success/30 text-foreground",
   warning: "bg-warning-pale border-warning/30 text-foreground",
   destructive: "bg-destructive-pale border-destructive/30 text-foreground",
+  neutral: "bg-surface border-border text-foreground",
 };
 
 const variantIcons = {
@@ -28,6 +29,7 @@ const variantIcons = {
   success: CheckCircle2,
   warning: AlertTriangle,
   destructive: AlertCircle,
+  neutral: Info,
 };
 
 export function Alert({

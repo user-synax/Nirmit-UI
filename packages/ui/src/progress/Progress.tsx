@@ -9,7 +9,7 @@ export interface ProgressProps extends ComponentPropsWithoutRef<
 > {
   className?: string;
   value?: number;
-  variant?: "default" | "success" | "warning" | "destructive";
+  variant?: "default" | "success" | "warning" | "destructive" | "info";
   label?: string;
   showValue?: boolean;
 }
@@ -19,6 +19,7 @@ const variantStyles = {
   success: "bg-success",
   warning: "bg-warning",
   destructive: "bg-destructive",
+  info: "bg-info",
 };
 
 export const Progress = forwardRef<

@@ -14,3 +14,8 @@ export * from "./alert";
 export * from "./progress";
 export * from "./accordion";
 export * from "./select";
+export * from "./separator";
+export * from "./textarea";
+export * from "./spinner";
+export * from "./kbd";
+export * from "./breadcrumb";

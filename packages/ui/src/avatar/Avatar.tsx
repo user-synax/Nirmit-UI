@@ -2,7 +2,7 @@
 
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { cn } from "@repo/utils";
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 
 type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
 

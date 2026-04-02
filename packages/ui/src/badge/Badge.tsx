@@ -4,6 +4,8 @@ import { HTMLAttributes } from "react";
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   variant?:
     | "default"
+    | "primary"
+    | "neutral"
     | "success"
     | "warning"
     | "destructive"
@@ -14,6 +16,8 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
 
 const variantStyles = {
   default: "bg-primary-pale text-primary border-transparent",
+  primary: "bg-primary text-background border-transparent",
+  neutral: "bg-surface-elevated text-foreground border-border",
   success: "bg-success-pale text-success border-transparent",
   warning: "bg-warning-pale text-warning border-transparent",
   destructive: "bg-destructive-pale text-destructive border-transparent",

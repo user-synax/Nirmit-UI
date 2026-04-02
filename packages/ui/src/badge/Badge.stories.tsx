@@ -13,6 +13,8 @@ const meta: Meta<typeof Badge> = {
       control: "select",
       options: [
         "default",
+        "primary",
+        "neutral",
         "success",
         "warning",
         "destructive",
@@ -40,6 +42,20 @@ export const Success: Story = {
   args: {
     children: "Success",
     variant: "success",
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: "Primary",
+    variant: "primary",
+  },
+};
+
+export const Neutral: Story = {
+  args: {
+    children: "Neutral",
+    variant: "neutral",
   },
 };
 

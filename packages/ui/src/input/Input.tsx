@@ -8,10 +8,29 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   hint?: string;
   error?: string;
   leftIcon?: React.ReactNode;
+  variant?: "default" | "filled" | "ghost";
 }
 
+const variantStyles = {
+  default: "bg-surface border-border hover:border-border-hover",
+  filled: "bg-surface-hover border-transparent hover:border-border",
+  ghost: "bg-transparent border-border hover:bg-surface",
+};
+
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, hint, error, leftIcon, className, id, ...props }, ref) => {
+  (
+    {
+      label,
+      hint,
+      error,
+      leftIcon,
+      className,
+      id,
+      variant = "default",
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
@@ -29,11 +48,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={id}
             className={cn(
-              "h-10 w-full rounded-lg border border-border bg-surface px-3 py-2",
+              "h-10 w-full rounded-lg border px-3 py-2",
               "text-sm text-foreground placeholder:text-muted",
               "transition-all duration-fast",
               "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
-              "hover:border-border-hover",
+              variantStyles[variant],
               "disabled:cursor-not-allowed disabled:opacity-50",
               error && "border-destructive focus:ring-destructive",
               leftIcon && "pl-9",

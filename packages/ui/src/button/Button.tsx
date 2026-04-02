@@ -4,7 +4,16 @@ import { cn } from "@repo/utils";
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost" | "destructive" | "outline";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "ghost"
+    | "destructive"
+    | "outline"
+    | "success"
+    | "warning"
+    | "soft"
+    | "link";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
 }
@@ -18,6 +27,10 @@ const variantStyles = {
   destructive: "bg-destructive text-background hover:opacity-90",
   outline:
     "bg-transparent border border-border hover:bg-surface text-foreground",
+  success: "bg-success text-background hover:opacity-90",
+  warning: "bg-warning text-background hover:opacity-90",
+  soft: "bg-primary-pale text-primary hover:opacity-90 border border-transparent",
+  link: "bg-transparent text-primary hover:underline h-auto p-0 shadow-none",
 };
 
 const sizeStyles = {
@@ -50,7 +63,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "disabled:opacity-50 disabled:cursor-not-allowed",
           "active:scale-[0.98]",
           variantStyles[variant],
-          sizeStyles[size],
+          variant !== "link" && sizeStyles[size],
           className,
         )}
         {...props}
