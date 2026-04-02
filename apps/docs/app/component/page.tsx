@@ -644,10 +644,11 @@ function PaginationPreview() {
         Current page: <span className="font-medium text-foreground">{page}</span>
       </p>
       <Pagination>
-        <PaginationList>
+        <PaginationList className="flex-wrap justify-center">
           <PaginationItem>
             <PaginationPrevious
               href="#"
+              className="[&>span]:hidden sm:[&>span]:inline"
               onClick={(event) => {
                 event.preventDefault();
                 setPage((prev) => Math.max(1, prev - 1));
@@ -674,6 +675,7 @@ function PaginationPreview() {
           <PaginationItem>
             <PaginationNext
               href="#"
+              className="[&>span]:hidden sm:[&>span]:inline"
               onClick={(event) => {
                 event.preventDefault();
                 setPage((prev) => Math.min(10, prev + 1));
@@ -1200,21 +1202,21 @@ export function Example() {
   }, [usageCode]);
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(850px_circle_at_8%_0%,rgba(14,165,233,0.14),transparent_55%),radial-gradient(720px_circle_at_92%_0%,rgba(16,185,129,0.12),transparent_48%)]" />
 
-      <main className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-        <div className="mb-4 flex items-center justify-between sm:mb-6">
+      <main className="relative mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 sm:mb-6">
           <button
             onClick={handleBack}
-            className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover"
+            className="inline-flex min-w-0 items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover"
           >
             <ArrowLeft className="h-4 w-4" />
             Go Back
           </button>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+            className="inline-flex min-w-0 items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
           >
             Home
             <Kbd size="sm">H</Kbd>
@@ -1251,10 +1253,10 @@ export function Example() {
           </div>
         </header>
 
-        <div className="grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-6 lg:self-start">
+        <div className="grid min-w-0 gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
+          <aside className="min-w-0 lg:sticky lg:top-6 lg:self-start">
             <div
-              className="rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5"
+              className="min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -1303,9 +1305,7 @@ export function Example() {
             </div>
           </aside>
 
-          <section
-            className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7"
-          >
+          <section className="min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-7">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <div className="mb-3 flex items-center gap-2">
@@ -1329,8 +1329,12 @@ export function Example() {
 
             <Separator className="my-6" />
 
-            <div className="rounded-2xl border border-border bg-background p-4 sm:p-6">
-              <ActivePreview />
+            <div className="min-w-0 rounded-2xl border border-border bg-background p-4 sm:p-6">
+              <div className="overflow-x-auto">
+                <div className="min-w-0">
+                  <ActivePreview />
+                </div>
+              </div>
             </div>
 
             <div className="mt-6 rounded-2xl border border-border bg-background p-4 sm:p-6">
@@ -1357,7 +1361,7 @@ export function Example() {
                   )}
                 </Button>
               </div>
-              <pre className="overflow-x-auto rounded-xl border border-border bg-[#081223] p-4 text-xs text-slate-100 sm:text-sm">
+              <pre className="max-w-full overflow-x-auto rounded-xl border border-border bg-[#081223] p-4 text-xs text-slate-100 sm:text-sm">
                 <code>{usageCode}</code>
               </pre>
             </div>
