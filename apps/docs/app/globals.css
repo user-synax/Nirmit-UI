@@ -80,6 +80,122 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .gradient-shift {
+    background-size: 180% 180%;
+    animation: gradient-shift 14s ease-in-out infinite;
+  }
+
+  .gradient-drift {
+    animation: gradient-drift 12s ease-in-out infinite;
+  }
+
+  .mouse-reactive {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    contain: paint;
+  }
+
+  .mouse-reactive::after {
+    content: "";
+    position: absolute;
+    inset: -28%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 260ms ease;
+    background: radial-gradient(
+      360px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(14, 165, 233, 0.22),
+      rgba(16, 185, 129, 0.14) 30%,
+      transparent 62%
+    );
+  }
+
+  .mouse-reactive:hover::after {
+    opacity: 1;
+  }
+
+  .mouse-layer {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mouse-tilt {
+    transform-style: preserve-3d;
+    will-change: transform;
+    backface-visibility: hidden;
+    transition:
+      transform 180ms ease-out,
+      box-shadow 180ms ease-out;
+    transform: translateZ(0) perspective(1000px) rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+  }
+
+  .hover-lift {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-color 220ms ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .aurora-bg {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    opacity: 0.8;
+    filter: blur(26px);
+    background:
+      radial-gradient(circle at 18% 22%, rgba(14, 165, 233, 0.22), transparent 42%),
+      radial-gradient(circle at 82% 12%, rgba(16, 185, 129, 0.18), transparent 38%),
+      radial-gradient(circle at 52% 88%, rgba(29, 78, 216, 0.22), transparent 44%);
+    animation: aurora-drift 18s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image:
+      repeating-radial-gradient(circle at 0 0, #fff, #fff 1px, transparent 1px, transparent 3px),
+      repeating-radial-gradient(circle at 100% 100%, #fff, #fff 1px, transparent 1px, transparent 4px);
+    mix-blend-mode: soft-light;
+  }
+
+  .glint-border {
+    position: relative;
+  }
+
+  .glint-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      rgba(14, 165, 233, 0.2) 45%,
+      rgba(16, 185, 129, 0.2) 55%,
+      transparent 80%
+    );
+    transform: translateX(-110%);
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .glint-border:hover::before {
+    animation: glint-sweep 900ms ease;
+    opacity: 1;
+  }
 }
 
 @keyframes accordion-down {
@@ -106,4 +222,73 @@
 
 .animate-accordion-up {
   animation: accordion-up 0.2s ease-out;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-drift {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.75;
+  }
+}
+
+@keyframes glint-sweep {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-shift,
+  .gradient-drift,
+  .aurora-bg,
+  .mouse-tilt,
+  .hover-lift,
+  .glint-border::before {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .mouse-reactive::after {
+    transition: none !important;
+    opacity: 0 !important;
+  }
 }

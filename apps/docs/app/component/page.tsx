@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { cn } from "@repo/utils";
 import {
   Accordion,
@@ -27,6 +28,7 @@ import {
   CardHeader,
   CardTitle,
   Checkbox,
+  CodeBlock,
   Dropdown,
   DropdownCheckboxItem,
   DropdownContent,
@@ -37,9 +39,17 @@ import {
   DropdownSeparator,
   DropdownShortcut,
   DropdownTrigger,
+  EmptyState,
   Input,
   Kbd,
   Modal,
+  Pagination,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationList,
+  PaginationNext,
+  PaginationPrevious,
   Progress,
   Select,
   SelectContent,
@@ -59,9 +69,13 @@ import {
   Tooltip,
 } from "@repo/ui";
 import {
+  ArrowLeft,
   Bell,
+  Check,
   ChevronRight,
+  Copy,
   Component,
+  FolderSearch,
   Layers,
   Palette,
   Search,
@@ -195,6 +209,29 @@ function CardPreview() {
           </p>
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+function EmptyStatePreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <EmptyState
+        title="No projects yet"
+        description="Create your first project to start collaborating with your team."
+        action={<Button>Create Project</Button>}
+      />
+      <EmptyState
+        variant="soft"
+        icon={<FolderSearch className="h-5 w-5" />}
+        title="No search results"
+        description="Try another keyword or clear your filters."
+        action={
+          <Button variant="secondary" size="sm">
+            Clear Filters
+          </Button>
+        }
+      />
     </div>
   );
 }
@@ -598,6 +635,76 @@ function BreadcrumbPreview() {
   );
 }
 
+function PaginationPreview() {
+  const [page, setPage] = React.useState(4);
+
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-muted-foreground">
+        Current page: <span className="font-medium text-foreground">{page}</span>
+      </p>
+      <Pagination>
+        <PaginationList>
+          <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                setPage((prev) => Math.max(1, prev - 1));
+              }}
+            />
+          </PaginationItem>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <PaginationItem key={value}>
+              <PaginationLink
+                href="#"
+                isActive={value === page}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setPage(value);
+                }}
+              >
+                {value}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                setPage((prev) => Math.min(10, prev + 1));
+              }}
+            />
+          </PaginationItem>
+        </PaginationList>
+      </Pagination>
+    </div>
+  );
+}
+
+function CodeBlockPreview() {
+  const snippet = `import { Button } from "@repo/ui";
+
+export function Demo() {
+  return <Button variant="soft">Run Action</Button>;
+}`;
+
+  return (
+    <div className="space-y-4">
+      <CodeBlock code={snippet} language="tsx" />
+      <CodeBlock
+        code={`pnpm add @repo/ui`}
+        language="bash"
+        variant="soft"
+      />
+    </div>
+  );
+}
+
 const showcaseItems: ShowcaseItem[] = [
   {
     id: "button",
@@ -626,6 +733,13 @@ const showcaseItems: ShowcaseItem[] = [
     category: "Layout",
     description: "Flexible content container with header, body, and footer slots.",
     Preview: CardPreview,
+  },
+  {
+    id: "empty-state",
+    name: "EmptyState",
+    category: "Layout",
+    description: "Clear empty placeholders with icon, copy, and optional action.",
+    Preview: EmptyStatePreview,
   },
   {
     id: "badge",
@@ -712,6 +826,13 @@ const showcaseItems: ShowcaseItem[] = [
     Preview: BreadcrumbPreview,
   },
   {
+    id: "pagination",
+    name: "Pagination",
+    category: "Navigation",
+    description: "Page navigation helpers with active, previous, and next states.",
+    Preview: PaginationPreview,
+  },
+  {
     id: "tooltip",
     name: "Tooltip",
     category: "Overlays",
@@ -740,6 +861,13 @@ const showcaseItems: ShowcaseItem[] = [
     Preview: KbdPreview,
   },
   {
+    id: "code-block",
+    name: "CodeBlock",
+    category: "Utilities",
+    description: "Styled code container with optional built-in copy action.",
+    Preview: CodeBlockPreview,
+  },
+  {
     id: "spinner",
     name: "Spinner",
     category: "Feedback",
@@ -748,18 +876,354 @@ const showcaseItems: ShowcaseItem[] = [
   },
 ];
 
+const usageExamples: Record<string, string> = {
+  button: `import { Button } from "@repo/ui";
+
+export function SaveAction() {
+  return <Button variant="primary">Save Changes</Button>;
+}`,
+  input: `import { Input } from "@repo/ui";
+
+export function EmailField() {
+  return (
+    <Input
+      label="Email"
+      type="email"
+      placeholder="you@example.com"
+      variant="filled"
+    />
+  );
+}`,
+  textarea: `import { Textarea } from "@repo/ui";
+
+export function MessageField() {
+  return (
+    <Textarea
+      label="Message"
+      placeholder="Write your message..."
+      hint="Max 500 characters"
+    />
+  );
+}`,
+  card: `import { Card, CardHeader, CardTitle, CardContent } from "@repo/ui";
+
+export function StatCard() {
+  return (
+    <Card variant="interactive">
+      <CardHeader>
+        <CardTitle>Active Users</CardTitle>
+      </CardHeader>
+      <CardContent>1,284 today</CardContent>
+    </Card>
+  );
+}`,
+  "empty-state": `import { EmptyState, Button } from "@repo/ui";
+
+export function EmptyProjects() {
+  return (
+    <EmptyState
+      title="No projects yet"
+      description="Create your first project to begin."
+      action={<Button>Create Project</Button>}
+    />
+  );
+}`,
+  badge: `import { Badge } from "@repo/ui";
+
+export function StatusBadge() {
+  return <Badge variant="primary">Live</Badge>;
+}`,
+  avatar: `import { Avatar, AvatarImage, AvatarFallback } from "@repo/ui";
+
+export function UserAvatar() {
+  return (
+    <Avatar size="md">
+      <AvatarImage src="/user.png" alt="User" />
+      <AvatarFallback>JD</AvatarFallback>
+    </Avatar>
+  );
+}`,
+  alert: `import { Alert } from "@repo/ui";
+
+export function SaveAlert() {
+  return (
+    <Alert variant="success" title="Saved">
+      Your profile changes are now live.
+    </Alert>
+  );
+}`,
+  progress: `import { Progress } from "@repo/ui";
+
+export function UploadProgress() {
+  return <Progress value={68} label="Uploading assets" showValue />;
+}`,
+  skeleton: `import { Skeleton, SkeletonText } from "@repo/ui";
+
+export function LoadingState() {
+  return (
+    <div className="space-y-3">
+      <Skeleton className="h-5 w-40" />
+      <SkeletonText lines={3} />
+    </div>
+  );
+}`,
+  checkbox: `import { Checkbox } from "@repo/ui";
+
+export function ConsentCheckbox() {
+  return <Checkbox label="I agree to the terms" defaultChecked />;
+}`,
+  switch: `import { Switch } from "@repo/ui";
+
+export function ThemeSwitch() {
+  return (
+    <Switch
+      label="Dark mode"
+      description="Use dark appearance"
+      defaultChecked
+    />
+  );
+}`,
+  select: `import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@repo/ui";
+
+export function FrameworkSelect() {
+  return (
+    <Select>
+      <SelectTrigger>
+        <SelectValue placeholder="Select framework" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="next">Next.js</SelectItem>
+        <SelectItem value="remix">Remix</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}`,
+  tabs: `import { Tabs, TabsList, TabsTrigger, TabsContent } from "@repo/ui";
+
+export function SettingsTabs() {
+  return (
+    <Tabs defaultValue="general">
+      <TabsList>
+        <TabsTrigger value="general">General</TabsTrigger>
+        <TabsTrigger value="security">Security</TabsTrigger>
+      </TabsList>
+      <TabsContent value="general">General settings</TabsContent>
+      <TabsContent value="security">Security settings</TabsContent>
+    </Tabs>
+  );
+}`,
+  accordion: `import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@repo/ui";
+
+export function FaqAccordion() {
+  return (
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Is this accessible?</AccordionTrigger>
+        <AccordionContent>Yes, keyboard support is included.</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}`,
+  dropdown: `import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownContent,
+  DropdownItem,
+  Button,
+} from "@repo/ui";
+
+export function AccountMenu() {
+  return (
+    <Dropdown>
+      <DropdownTrigger asChild>
+        <Button variant="secondary">Open Menu</Button>
+      </DropdownTrigger>
+      <DropdownContent>
+        <DropdownItem>Profile</DropdownItem>
+        <DropdownItem>Settings</DropdownItem>
+      </DropdownContent>
+    </Dropdown>
+  );
+}`,
+  breadcrumb: `import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@repo/ui";
+
+export function PageBreadcrumb() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Docs</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Components</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}`,
+  pagination: `import {
+  Pagination,
+  PaginationList,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from "@repo/ui";
+
+export function Pager() {
+  return (
+    <Pagination>
+      <PaginationList>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" isActive>
+            1
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationList>
+    </Pagination>
+  );
+}`,
+  tooltip: `import { Tooltip, Button } from "@repo/ui";
+
+export function HelpTooltip() {
+  return (
+    <Tooltip content="Extra context for this action">
+      <Button variant="outline">Hover me</Button>
+    </Tooltip>
+  );
+}`,
+  modal: `import { Modal, Button, Input, Textarea } from "@repo/ui";
+
+export function InviteModal() {
+  return (
+    <Modal
+      trigger={<Button>Invite</Button>}
+      title="Invite Team Member"
+      description="Share access with your teammate"
+      size="2xl"
+    >
+      <div className="space-y-4">
+        <Input label="Email" placeholder="user@company.com" />
+        <Textarea label="Message" placeholder="Welcome aboard!" />
+      </div>
+    </Modal>
+  );
+}`,
+  separator: `import { Separator } from "@repo/ui";
+
+export function SectionDivider() {
+  return (
+    <div>
+      <p>Account</p>
+      <Separator className="my-3" />
+      <p>Billing</p>
+    </div>
+  );
+}`,
+  kbd: `import { Kbd } from "@repo/ui";
+
+export function ShortcutHint() {
+  return (
+    <p>
+      Open command palette: <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+    </p>
+  );
+}`,
+  "code-block": `import { CodeBlock } from "@repo/ui";
+
+export function ApiSnippet() {
+  return (
+    <CodeBlock
+      language="tsx"
+      code={'<Button variant="primary">Save</Button>'}
+    />
+  );
+}`,
+  spinner: `import { Spinner } from "@repo/ui";
+
+export function Loading() {
+  return <Spinner size="md" variant="primary" />;
+}`,
+};
+
 export default function ComponentPage() {
   const [activeId, setActiveId] = React.useState(showcaseItems[0]?.id ?? "");
+  const [copied, setCopied] = React.useState(false);
   const activeItem =
     showcaseItems.find((item) => item.id === activeId) ?? showcaseItems[0];
   const ActivePreview = activeItem.Preview;
+  const usageCode =
+    usageExamples[activeItem.id] ??
+    `import { ${activeItem.name} } from "@repo/ui";
+
+export function Example() {
+  return <${activeItem.name} />;
+}`;
+
+  const handleBack = React.useCallback(() => {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    window.location.href = "/";
+  }, []);
+
+  const handleCopy = React.useCallback(async () => {
+    await navigator.clipboard.writeText(usageCode);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1400);
+  }, [usageCode]);
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(850px_circle_at_8%_0%,rgba(14,165,233,0.14),transparent_55%),radial-gradient(720px_circle_at_92%_0%,rgba(16,185,129,0.12),transparent_48%)]" />
 
       <main className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-        <header className="mb-6 rounded-2xl border border-border bg-surface p-6 shadow-sm sm:mb-8 sm:p-8">
+        <div className="mb-4 flex items-center justify-between sm:mb-6">
+          <button
+            onClick={handleBack}
+            className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Go Back
+          </button>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+          >
+            Home
+            <Kbd size="sm">H</Kbd>
+          </Link>
+        </div>
+
+        <header
+          className="mb-6 rounded-2xl border border-border bg-surface p-6 shadow-sm sm:mb-8 sm:p-8"
+        >
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <Badge variant="info" className="mb-4">
@@ -789,7 +1253,9 @@ export default function ComponentPage() {
 
         <div className="grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
           <aside className="lg:sticky lg:top-6 lg:self-start">
-            <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5">
+            <div
+              className="rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Component className="h-4 w-4 text-info" />
@@ -837,7 +1303,9 @@ export default function ComponentPage() {
             </div>
           </aside>
 
-          <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7">
+          <section
+            className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7"
+          >
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <div className="mb-3 flex items-center gap-2">
@@ -863,6 +1331,35 @@ export default function ComponentPage() {
 
             <div className="rounded-2xl border border-border bg-background p-4 sm:p-6">
               <ActivePreview />
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-border bg-background p-4 sm:p-6">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    Usage Code
+                  </p>
+                  <p className="text-xs text-muted">
+                    Copy this snippet to start using the selected component.
+                  </p>
+                </div>
+                <Button size="sm" variant="secondary" onClick={handleCopy}>
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4" />
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4" />
+                      Copy Code
+                    </>
+                  )}
+                </Button>
+              </div>
+              <pre className="overflow-x-auto rounded-xl border border-border bg-[#081223] p-4 text-xs text-slate-100 sm:text-sm">
+                <code>{usageCode}</code>
+              </pre>
             </div>
 
             <div className="mt-6 rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
