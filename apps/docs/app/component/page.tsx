@@ -21,14 +21,27 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Button,
+  CalendarOnly,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
+  Carousel,
+  CarouselItem,
   Checkbox,
   CodeBlock,
+  Combobox,
+  DataTable,
+  DatePicker,
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
   Dropdown,
   DropdownCheckboxItem,
   DropdownContent,
@@ -40,10 +53,16 @@ import {
   DropdownShortcut,
   DropdownTrigger,
   EmptyState,
+  FileUpload,
   Input,
   Kbd,
   LoadingDots,
   Modal,
+  Navbar,
+  NavbarActions,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
   Pagination,
   PaginationEllipsis,
   PaginationItem,
@@ -51,7 +70,12 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Progress,
+  RadioGroup,
+  RadioGroupItem,
   Select,
   SelectContent,
   SelectItem,
@@ -60,7 +84,11 @@ import {
   Separator,
   Skeleton,
   SkeletonText,
+  Slider,
   Spinner,
+  Stepper,
+  StepperItem,
+  StepperSeparator,
   Switch,
   Table,
   TableBody,
@@ -80,7 +108,9 @@ import {
   TimelineLine,
   TimelineMeta,
   TimelineTitle,
+  Toggle,
   Tooltip,
+  TreeView,
 } from "@repo/ui";
 import {
   ArrowLeft,
@@ -176,7 +206,9 @@ function CardPreview() {
       <Card>
         <CardHeader>
           <CardTitle>Starter Card</CardTitle>
-          <CardDescription>Balanced spacing for summary content.</CardDescription>
+          <CardDescription>
+            Balanced spacing for summary content.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
@@ -215,7 +247,9 @@ function CardPreview() {
       <Card variant="gradient">
         <CardHeader>
           <CardTitle>Gradient Card</CardTitle>
-          <CardDescription>Subtle modern glow from layered surfaces.</CardDescription>
+          <CardDescription>
+            Subtle modern glow from layered surfaces.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
@@ -531,7 +565,10 @@ function TooltipPreview() {
       <Tooltip content="Inspect component details">
         <Button variant="outline">Hover me</Button>
       </Tooltip>
-      <Tooltip content="Modern colors are applied across the page" side="bottom">
+      <Tooltip
+        content="Modern colors are applied across the page"
+        side="bottom"
+      >
         <Button variant="ghost">Color note</Button>
       </Tooltip>
     </div>
@@ -655,7 +692,8 @@ function PaginationPreview() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Current page: <span className="font-medium text-foreground">{page}</span>
+        Current page:{" "}
+        <span className="font-medium text-foreground">{page}</span>
       </p>
       <Pagination>
         <PaginationList className="flex-wrap justify-center">
@@ -712,11 +750,7 @@ export function Demo() {
   return (
     <div className="space-y-4">
       <CodeBlock code={snippet} language="tsx" />
-      <CodeBlock
-        code={`pnpm add @repo/ui`}
-        language="bash"
-        variant="soft"
-      />
+      <CodeBlock code={`pnpm add @repo/ui`} language="bash" variant="soft" />
     </div>
   );
 }
@@ -800,6 +834,267 @@ function LoadingDotsPreview() {
   );
 }
 
+function RadioGroupPreview() {
+  return (
+    <RadioGroup defaultValue="option-1">
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="option-1" id="r1" />
+        <label htmlFor="r1" className="text-sm text-foreground">
+          Default
+        </label>
+      </div>
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="option-2" id="r2" />
+        <label htmlFor="r2" className="text-sm text-foreground">
+          Standard
+        </label>
+      </div>
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="option-3" id="r3" />
+        <label htmlFor="r3" className="text-sm text-foreground">
+          Premium
+        </label>
+      </div>
+    </RadioGroup>
+  );
+}
+
+function TogglePreview() {
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Toggle>Toggle</Toggle>
+      <Toggle variant="outline">Outline</Toggle>
+      <Toggle size="sm">Small</Toggle>
+      <Toggle size="lg">Large</Toggle>
+    </div>
+  );
+}
+
+function SliderPreview() {
+  return (
+    <div className="space-y-6 px-2">
+      <Slider defaultValue={[50]} max={100} step={1} />
+      <Slider defaultValue={[25, 75]} max={100} step={5} />
+    </div>
+  );
+}
+
+function ComboboxPreview() {
+  return (
+    <div className="max-w-xs">
+      <Combobox
+        options={[
+          { value: "next", label: "Next.js", description: "React framework" },
+          {
+            value: "remix",
+            label: "Remix",
+            description: "Full stack framework",
+          },
+          {
+            value: "astro",
+            label: "Astro",
+            description: "Content-focused framework",
+          },
+        ]}
+        placeholder="Select a framework..."
+      />
+    </div>
+  );
+}
+
+function FileUploadPreview() {
+  return (
+    <FileUpload accept=".png,.jpg,.pdf" maxFiles={3} className="max-w-md" />
+  );
+}
+
+function DatePickerPreview() {
+  return (
+    <div className="max-w-xs">
+      <DatePicker placeholder="Pick a date" />
+    </div>
+  );
+}
+
+function CalendarPreview() {
+  return <CalendarOnly />;
+}
+
+function DrawerPreview() {
+  return (
+    <div className="rounded-lg border border-border bg-surface p-6 text-center">
+      <p className="text-sm font-medium text-foreground mb-2">
+        Slide-out panel
+      </p>
+      <p className="text-xs text-muted-foreground mb-4">
+        Opens from any edge for mobile-friendly content
+      </p>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button variant="outline" size="sm">
+            Open Drawer
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent side="bottom">
+          <DrawerHeader>
+            <DrawerTitle>Drawer Title</DrawerTitle>
+            <DrawerDescription>
+              This slides up from the bottom.
+            </DrawerDescription>
+          </DrawerHeader>
+          <DrawerFooter>
+            <Button size="sm">Confirm</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </div>
+  );
+}
+
+function PopoverPreview() {
+  return (
+    <div className="flex justify-center">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline">Open Popover</Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <p className="text-sm text-foreground">
+            Popover content with arbitrary JSX children.
+          </p>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
+
+function ToastPreview() {
+  return (
+    <div className="space-y-3">
+      <p className="text-sm text-muted-foreground">
+        Toast notifications appear at the bottom-right of the screen.
+      </p>
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-3 rounded-lg border border-success/30 bg-surface p-3">
+          <Check className="h-4 w-4 text-success shrink-0" />
+          <div className="flex-1">
+            <p className="text-sm font-medium text-foreground">
+              Saved successfully
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Your changes are now live.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 rounded-lg border border-destructive/30 bg-surface p-3">
+          <span className="h-4 w-4 text-destructive shrink-0">✕</span>
+          <div className="flex-1">
+            <p className="text-sm font-medium text-foreground">
+              Something went wrong
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Please try again later.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NavbarPreview() {
+  return (
+    <Navbar variant="default">
+      <NavbarBrand>Brand</NavbarBrand>
+      <NavbarContent>
+        <NavbarItem active>Home</NavbarItem>
+        <NavbarItem>About</NavbarItem>
+      </NavbarContent>
+      <NavbarActions>
+        <NavbarItem icon={<span>🔔</span>} />
+      </NavbarActions>
+    </Navbar>
+  );
+}
+
+function StepperPreview() {
+  return (
+    <Stepper currentStep={1}>
+      <StepperItem step={0} title="Account" />
+      <StepperSeparator />
+      <StepperItem step={1} title="Details" />
+      <StepperSeparator />
+      <StepperItem step={2} title="Complete" />
+    </Stepper>
+  );
+}
+
+function CommandMenuPreview() {
+  return (
+    <p className="text-sm text-muted-foreground">
+      Press <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd> to open the command menu.
+    </p>
+  );
+}
+
+function CarouselPreview() {
+  return (
+    <Carousel>
+      <CarouselItem>
+        <div className="flex h-32 items-center justify-center rounded-lg bg-primary/10 text-primary font-medium">
+          Slide 1
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div className="flex h-32 items-center justify-center rounded-lg bg-success/10 text-success font-medium">
+          Slide 2
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div className="flex h-32 items-center justify-center rounded-lg bg-warning/10 text-warning font-medium">
+          Slide 3
+        </div>
+      </CarouselItem>
+    </Carousel>
+  );
+}
+
+function TreeViewPreview() {
+  return (
+    <TreeView
+      data={[
+        {
+          id: "src",
+          label: "src",
+          children: [
+            {
+              id: "components",
+              label: "components",
+              children: [{ id: "button", label: "Button.tsx" }],
+            },
+            { id: "utils", label: "utils.ts" },
+          ],
+        },
+        { id: "package", label: "package.json" },
+      ]}
+    />
+  );
+}
+
+function DataTablePreview() {
+  const data = [
+    { name: "Button", category: "Actions", status: "Stable" },
+    { name: "Input", category: "Forms", status: "Stable" },
+    { name: "Modal", category: "Overlays", status: "New" },
+  ];
+  const columns = [
+    { key: "name", header: "Name", sortable: true },
+    { key: "category", header: "Category" },
+    { key: "status", header: "Status" },
+  ];
+  return <DataTable data={data} columns={columns} />;
+}
+
 const showcaseItems: ShowcaseItem[] = [
   {
     id: "button",
@@ -812,28 +1107,32 @@ const showcaseItems: ShowcaseItem[] = [
     id: "input",
     name: "Input",
     category: "Forms",
-    description: "Single-line fields with labels, hints, and validation states.",
+    description:
+      "Single-line fields with labels, hints, and validation states.",
     Preview: InputPreview,
   },
   {
     id: "textarea",
     name: "Textarea",
     category: "Forms",
-    description: "Multi-line input for longer text with hint and error support.",
+    description:
+      "Multi-line input for longer text with hint and error support.",
     Preview: TextareaPreview,
   },
   {
     id: "card",
     name: "Card",
     category: "Layout",
-    description: "Flexible content container with header, body, and footer slots.",
+    description:
+      "Flexible content container with header, body, and footer slots.",
     Preview: CardPreview,
   },
   {
     id: "empty-state",
     name: "EmptyState",
     category: "Layout",
-    description: "Clear empty placeholders with icon, copy, and optional action.",
+    description:
+      "Clear empty placeholders with icon, copy, and optional action.",
     Preview: EmptyStatePreview,
   },
   {
@@ -854,14 +1153,16 @@ const showcaseItems: ShowcaseItem[] = [
     id: "table",
     name: "Table",
     category: "Data Display",
-    description: "Composable table primitives with striped and compact variants.",
+    description:
+      "Composable table primitives with striped and compact variants.",
     Preview: TablePreview,
   },
   {
     id: "timeline",
     name: "Timeline",
     category: "Data Display",
-    description: "Vertical timeline layout for process steps and event history.",
+    description:
+      "Vertical timeline layout for process steps and event history.",
     Preview: TimelinePreview,
   },
   {
@@ -938,7 +1239,8 @@ const showcaseItems: ShowcaseItem[] = [
     id: "pagination",
     name: "Pagination",
     category: "Navigation",
-    description: "Page navigation helpers with active, previous, and next states.",
+    description:
+      "Page navigation helpers with active, previous, and next states.",
     Preview: PaginationPreview,
   },
   {
@@ -959,7 +1261,8 @@ const showcaseItems: ShowcaseItem[] = [
     id: "separator",
     name: "Separator",
     category: "Layout",
-    description: "Horizontal and vertical dividers for cleaner information flow.",
+    description:
+      "Horizontal and vertical dividers for cleaner information flow.",
     Preview: SeparatorPreview,
   },
   {
@@ -989,6 +1292,119 @@ const showcaseItems: ShowcaseItem[] = [
     category: "Feedback",
     description: "Animated three-dot loader for subtle inline loading states.",
     Preview: LoadingDotsPreview,
+  },
+  {
+    id: "radio-group",
+    name: "RadioGroup",
+    category: "Forms",
+    description: "Single-select radio options with accessible grouping.",
+    Preview: RadioGroupPreview,
+  },
+  {
+    id: "toggle",
+    name: "Toggle",
+    category: "Actions",
+    description: "Two-state button with outline and default variants.",
+    Preview: TogglePreview,
+  },
+  {
+    id: "slider",
+    name: "Slider",
+    category: "Forms",
+    description: "Range input for selecting numeric values within a range.",
+    Preview: SliderPreview,
+  },
+  {
+    id: "combobox",
+    name: "Combobox",
+    category: "Forms",
+    description: "Searchable dropdown with icon and description support.",
+    Preview: ComboboxPreview,
+  },
+  {
+    id: "file-upload",
+    name: "FileUpload",
+    category: "Forms",
+    description: "Drag-and-drop file input with progress and validation.",
+    Preview: FileUploadPreview,
+  },
+  {
+    id: "date-picker",
+    name: "DatePicker",
+    category: "Forms",
+    description: "Date selection with calendar popover and range support.",
+    Preview: DatePickerPreview,
+  },
+  {
+    id: "calendar",
+    name: "Calendar",
+    category: "Forms",
+    description: "Standalone month calendar with navigation and selection.",
+    Preview: CalendarPreview,
+  },
+  {
+    id: "drawer",
+    name: "Drawer",
+    category: "Overlays",
+    description: "Slide-out panel from any edge for mobile-friendly content.",
+    Preview: DrawerPreview,
+  },
+  {
+    id: "popover",
+    name: "Popover",
+    category: "Overlays",
+    description: "Floating content container anchored to a trigger.",
+    Preview: PopoverPreview,
+  },
+  {
+    id: "toast",
+    name: "Toast",
+    category: "Feedback",
+    description: "Non-blocking notifications with actions and auto-dismiss.",
+    Preview: ToastPreview,
+  },
+  {
+    id: "navbar",
+    name: "Navbar",
+    category: "Navigation",
+    description: "Top navigation bar with brand, links, and actions.",
+    Preview: NavbarPreview,
+  },
+  {
+    id: "stepper",
+    name: "Stepper",
+    category: "Navigation",
+    description:
+      "Multi-step progress indicator with horizontal and vertical layouts.",
+    Preview: StepperPreview,
+  },
+  {
+    id: "command-menu",
+    name: "CommandMenu",
+    category: "Navigation",
+    description: "Keyboard-driven command palette with search and shortcuts.",
+    Preview: CommandMenuPreview,
+  },
+  {
+    id: "carousel",
+    name: "Carousel",
+    category: "Data Display",
+    description: "Swipeable content carousel with autoplay and indicators.",
+    Preview: CarouselPreview,
+  },
+  {
+    id: "tree-view",
+    name: "TreeView",
+    category: "Data Display",
+    description: "Hierarchical file/folder tree with expand and select.",
+    Preview: TreeViewPreview,
+  },
+  {
+    id: "data-table",
+    name: "DataTable",
+    category: "Data Display",
+    description: "Sortable, selectable data table with custom cell rendering.",
+    Preview: DataTablePreview,
   },
 ];
 
@@ -1343,6 +1759,205 @@ export function Loading() {
 export function InlineLoading() {
   return <LoadingDots size="md" variant="primary" />;
 }`,
+  "radio-group": `import { RadioGroup, RadioGroupItem } from "@repo/ui";
+
+export function PlanSelector() {
+  return (
+    <RadioGroup defaultValue="standard">
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="free" id="free" />
+        <label htmlFor="free">Free</label>
+      </div>
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="standard" id="standard" />
+        <label htmlFor="standard">Standard</label>
+      </div>
+    </RadioGroup>
+  );
+}`,
+  toggle: `import { Toggle } from "@repo/ui";
+
+export function BoldToggle() {
+  return <Toggle aria-label="Toggle bold">Bold</Toggle>;
+}`,
+  slider: `import { Slider } from "@repo/ui";
+
+export function VolumeControl() {
+  return <Slider defaultValue={[75]} max={100} step={1} />;
+}`,
+  combobox: `import { Combobox } from "@repo/ui";
+
+export function FrameworkSelect() {
+  return (
+    <Combobox
+      options={[
+        { value: "next", label: "Next.js" },
+        { value: "remix", label: "Remix" },
+      ]}
+      placeholder="Select framework..."
+    />
+  );
+}`,
+  "file-upload": `import { FileUpload } from "@repo/ui";
+
+export function DocumentUpload() {
+  return (
+    <FileUpload
+      accept=".pdf,.doc,.docx"
+      maxFiles={5}
+      maxSize={10 * 1024 * 1024}
+    />
+  );
+}`,
+  "date-picker": `import { DatePicker } from "@repo/ui";
+
+export function BirthdateField() {
+  return <DatePicker placeholder="Select birthdate" />;
+}`,
+  calendar: `import { CalendarOnly } from "@repo/ui";
+
+export function EventCalendar() {
+  return <CalendarOnly />;
+}`,
+  drawer: `import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@repo/ui";
+
+export function MobileMenu() {
+  return (
+    <Drawer>
+      <DrawerTrigger>Open Menu</DrawerTrigger>
+      <DrawerContent side="right">
+        <DrawerHeader>
+          <DrawerTitle>Navigation</DrawerTitle>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
+  );
+}`,
+  popover: `import { Popover, PopoverTrigger, PopoverContent } from "@repo/ui";
+
+export function InfoPopover() {
+  return (
+    <Popover>
+      <PopoverTrigger>Hover me</PopoverTrigger>
+      <PopoverContent>
+        <p>Additional information here.</p>
+      </PopoverContent>
+    </Popover>
+  );
+}`,
+  toast: `import { ToastProvider, useToast } from "@repo/ui";
+
+function App() {
+  return (
+    <ToastProvider>
+      <Content />
+    </ToastProvider>
+  );
+}
+
+function Content() {
+  const { success } = useToast();
+  return <button onClick={() => success("Saved!")}>Save</button>;
+}`,
+  navbar: `import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarActions,
+} from "@repo/ui";
+
+export function AppNav() {
+  return (
+    <Navbar variant="sticky">
+      <NavbarBrand>Brand</NavbarBrand>
+      <NavbarContent>
+        <NavbarItem active>Home</NavbarItem>
+      </NavbarContent>
+      <NavbarActions>
+        <NavbarItem>Sign In</NavbarItem>
+      </NavbarActions>
+    </Navbar>
+  );
+}`,
+  stepper: `import {
+  Stepper,
+  StepperItem,
+  StepperSeparator,
+} from "@repo/ui";
+
+export function CheckoutSteps() {
+  return (
+    <Stepper currentStep={1}>
+      <StepperItem step={0} title="Cart" />
+      <StepperSeparator />
+      <StepperItem step={1} title="Shipping" />
+      <StepperSeparator />
+      <StepperItem step={2} title="Payment" />
+    </Stepper>
+  );
+}`,
+  "command-menu": `import { CommandMenu } from "@repo/ui";
+
+export function AppCommandMenu() {
+  return (
+    <CommandMenu
+      open={isOpen}
+      onOpenChange={setOpen}
+      groups={[
+        {
+          heading: "Navigation",
+          items: [
+            { id: "home", label: "Home", action: () => navigate("/") },
+          ],
+        },
+      ]}
+    />
+  );
+}`,
+  carousel: `import { Carousel, CarouselItem } from "@repo/ui";
+
+export function ImageGallery() {
+  return (
+    <Carousel autoplay loop>
+      <CarouselItem><img src="/1.jpg" /></CarouselItem>
+      <CarouselItem><img src="/2.jpg" /></CarouselItem>
+    </Carousel>
+  );
+}`,
+  "tree-view": `import { TreeView } from "@repo/ui";
+
+export function FileExplorer() {
+  return (
+    <TreeView
+      data={[
+        {
+          id: "src",
+          label: "src",
+          children: [
+            { id: "app", label: "App.tsx" },
+          ],
+        },
+      ]}
+    />
+  );
+}`,
+  "data-table": `import { DataTable } from "@repo/ui";
+
+export function UserTable() {
+  const columns = [
+    { key: "name", header: "Name", sortable: true },
+    { key: "email", header: "Email" },
+    { key: "role", header: "Role" },
+  ];
+  return <DataTable data={users} columns={columns} />;
+}`,
 };
 
 export default function ComponentPage() {
@@ -1497,9 +2112,7 @@ export default function ComponentPage() {
           </Link>
         </div>
 
-        <header
-          className="mb-6 rounded-2xl border border-border bg-surface p-6 shadow-sm sm:mb-8 sm:p-8"
-        >
+        <header className="mb-6 rounded-2xl border border-border bg-surface p-6 shadow-sm sm:mb-8 sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <Badge variant="info" className="mb-4">
@@ -1529,9 +2142,7 @@ export default function ComponentPage() {
 
         <div className="grid min-w-0 gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
           <aside className="min-w-0 lg:sticky lg:top-6 lg:self-start">
-            <div
-              className="min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5"
-            >
+            <div className="min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Component className="h-4 w-4 text-info" />
